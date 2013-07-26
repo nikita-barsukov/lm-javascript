@@ -1,45 +1,42 @@
-// # Linear Regression
-// [Simple linear regression](http://en.wikipedia.org/wiki/Simple_linear_regression)
-// is a simple way to find a fitted line
-// between a set of coordinates.
-function lm() {
-    var lm = {},
-        data = [];
 
-    lm.data = function(x) {
-        if (!arguments.length) return data;
-        data = x.slice();
-        data.sort(function(a, b) { return a[0] - b[0]; });
-        return lm;
-    };
+function lm(dt) {
 
-    lm.path = function() {
-        var sum_x = 0, sum_y = 0,
-            sum_xx = 0, sum_xy = 0,
-            m, b;
+	var data = function(x) {
+		if (!arguments.length) return x;
+		data = x.slice();
+		data.sort(function(a, b) { return a[0] - b[0]; });
+		return data;
+	};
+	 
+	var coef = function(d) {
+		var sum_x = 0, sum_y = 0,
+		sum_xx = 0, sum_xy = 0,
+		m, b;
+		 
+		for (var i = 0; i < d.length; i++) {
+			sum_x += d[i][0];
+			sum_y += d[i][1];
+			 
+			sum_xx += Math.pow(d[i][0], 2);
+			sum_xy += d[i][0] * d[i][1];
+		}
+	 
+		m = (d.length * sum_xy - sum_x * sum_y) / (d.length * sum_xx - sum_x * sum_x);
+		b = (sum_y / d.length) - (m * sum_x) / d.length;
 
-        for (var i = 0; i < data.length; i++) {
-            sum_x += data[i][0];
-            sum_y += data[i][1];
+		return {"slope": m, "intercept": b}
+	};
 
-            sum_xx += Math.pow(data[i][0], 2);
-            sum_xy += data[i][0] * data[i][1];
-        }
+	var path = function(d) {		 
+		return ;
+	};
 
-        m = (data.length * sum_xy - sum_x * sum_y) /
-            (data.length * sum_xx - sum_x * sum_x);
-        b = (sum_y / data.length) - (m * sum_x) / data.length;
+	this.data_points = data(dt);
+	this.coefficients = coef(this.data_points);
+	this.func = function (x) {return this.coefficients.slope * x + this.coefficients.intercept};
+	this.path = [
+			[this.data_points[0][0], this.func(this.data_points[0][0])],
+			[this.data_points[this.data_points.length - 1][0], this.func(this.data_points[this.data_points.length - 1][0])]
+		];
 
-        return [
-            [data[0][0], data[0][0] * m + b],
-            [data[data.length - 1][0], data[data.length - 1][0] * m + b]
-        ];
-    };
-
-    return lm;
 }
-
-// This implementation was influenced by
-// 
-// * [Least squares in Javascript](http://dracoblue.net/dev/linear-least-squares-in-javascript/159/)
-// * [Simple linear regression](http://en.wikipedia.org/wiki/Simple_linear_regression)
