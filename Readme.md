@@ -8,6 +8,10 @@ Functionality is partly based on `lm()` function from language R.
 Usage.
 ------
 
+Initialize new object of class `lm` and pass a dataset, containing pairs of x - y points. Coefficients, equation of regresison line, coordinates of two points of this line, other parameters of regresison model are calculated at initialization.
+
+h3. Examples:
+
 ```
 	// Creating test data
     var dataset = [];
@@ -23,9 +27,6 @@ Usage.
 
     // Slope and intercept
     console.log(linear.coefficients)
-
-    // Array of residual errors
-    console.log(linear.residual_errors)
 
     // X and Y values of regression line
     console.log(linear.path)
