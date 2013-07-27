@@ -10,7 +10,7 @@ Usage.
 
 Initialize new object of class `lm` and pass a dataset, containing pairs of x - y points. Coefficients, equation of regresison line, coordinates of two points of this line, other parameters of regresison model are calculated at initialization.
 
-h3. Examples:
+### Examples:
 
 ```
 	// Creating test data
